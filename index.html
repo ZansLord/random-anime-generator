@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Random Anime Generator</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	</head>
+	<body id="top">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="content">
+					<h1><a id="title" href="">Searching...</a></h1>
+					<p id="genre"></p>
+					<ul class="actions">
+						<li><button id="refresh" onclick="location.reload();">Refresh</button></li>
+						<li><button id="crunchy" onclick="">Search MyAnimeList</button></li>
+					</ul>
+				</div>
+				<div class="image"><div class="inner"><img id="poster" src="images/screen.jpg" height="300px" alt="" /></div></div>
+			</header>
+
+
+		<!-- Footer -->
+			<footer id="footer">
+				<p class="copyright">&copy; miyata.moe</p>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			<script>
+				let chosenOne = {}
+				let max = 14000
+				let rand = Math.floor(Math.random() * max)
+				console.log(rand)
+				$.get("https://kitsu.io/api/edge/anime?page[limit]=1&page[offset]=" + rand, function(data) {
+					chosenOne = data.data[0]
+					console.log(chosenOne)
+					$("#poster").attr("src", chosenOne.attributes.posterImage.original)
+					$("#title").html(chosenOne.attributes.titles.en_jp)
+					let base_query = "location.href='https://myanimelist.net/search/all?q="
+					$("#crunchy").attr("onclick", base_query + chosenOne.attributes.titles.en_jp + "'")
+				})
+
+			</script>
+
+	</body>
+</html>
