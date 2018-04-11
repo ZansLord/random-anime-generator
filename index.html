@@ -39,16 +39,16 @@
 			<script src="assets/js/main.js"></script>
 			<script>
 				let chosenOne = {}
-				let max = 14000
+				let max = 331
 				let rand = Math.floor(Math.random() * max)
 				console.log(rand)
-				$.get("https://kitsu.io/api/edge/anime?page[limit]=1&page[offset]=" + rand, function(data) {
-					chosenOne = data.data[0]
+				$.get("https://anime.miyata.moe/animes/" + rand, function(data) {
+					chosenOne = data[Math.floor(Math.random() * 30)]
 					console.log(chosenOne)
-					$("#poster").attr("src", chosenOne.attributes.posterImage.original)
-					$("#title").html(chosenOne.attributes.titles.en_jp)
+					$("#poster").attr("src", chosenOne.image)
+					$("#title").html(chosenOne.title)
 					let base_query = "location.href='https://myanimelist.net/search/all?q="
-					$("#crunchy").attr("onclick", base_query + chosenOne.attributes.titles.en_jp + "'")
+					$("#crunchy").attr("onclick", base_query + chosenOne.title + "'")
 				})
 
 			</script>
